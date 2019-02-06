@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import "./App.css";
 import NewWindow from "./NewWindow";
+import ListDetails from './ListDetails';
+import {StripedList, ListItem} from './components';
 
 class App extends Component {
   constructor(props) {
@@ -32,14 +33,10 @@ class App extends Component {
   }
 
   getWindows = () => {
-    const externalWindows = [...this.state.externalWindowIds].map(
-      id => (
-        <NewWindow
-          key={id}
-          id={id}
-          onClose={this.handleCloseWindow}
-          data={this.state.selectedDataIds}
-        />
+    const externalWindows = [...this.state.externalWindowIds].map(id => (
+        <NewWindow key={id} id={id} onClose={this.handleCloseWindow}>
+          <ListDetails data={this.state.selectedDataIds}/>
+        </NewWindow>
       )
     );
     console.log("Number of open windows: ", externalWindows.length);
@@ -77,19 +74,24 @@ class App extends Component {
 
           <div>
             {this.state.data.map(item => (
-              <label
-                htmlFor={`data_${item.id}`}
-                key={`data_${item.id}`}
-                className="data-option"
-              >
-                <input
-                  type="checkbox"
-                  id={`data_${item.id}`}
-                  onChange={this.toggleSelectedData}
-                  value={item.id}
-                />
-                <span>{item.name}</span>
-              </label>
+              <StripedList key={item.id}>
+                <ListItem>
+                  <label
+                    htmlFor={`data_${item.id}`}
+                    key={`data_${item.id}`}
+                    className="data-option"
+                  >
+                    <i className="fas fa-ice-cream"/>
+                    <input
+                      type="checkbox"
+                      id={`data_${item.id}`}
+                      onChange={this.toggleSelectedData}
+                      value={item.id}
+                    />
+                    <span>{item.name}</span>
+                  </label>
+                </ListItem>
+              </StripedList>
             ))}
           </div>
         </main>

@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import ReactDOM from 'react-dom';
-import ListDetails from './ListDetails';
+import { copyStyles } from "./copyHelper";
 
 
 class NewWindow extends Component {
@@ -13,6 +13,7 @@ class NewWindow extends Component {
 
     componentDidMount = () => {
         this.externalWindow = window.open('', '', 'width=600,height=400,left=200,top=200');
+        copyStyles(document, this.externalWindow.document);
         this.externalWindow.document.body.appendChild(this.element);
         this.externalWindow.document.title = this.props.id;
         this.externalWindow.addEventListener("unload", this.handleClose);
@@ -29,7 +30,7 @@ class NewWindow extends Component {
     
     render() {
         return ReactDOM.createPortal(
-            <ListDetails {...this.props} />,
+            this.props.children,
             this.element
         );
     }

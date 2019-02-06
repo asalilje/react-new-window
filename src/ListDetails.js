@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { LineChart } from 'react-charts-d3';
+import {StripedList, ListItem} from './components';
 
 const chartdata = [
     { key: 'Group 1', values: [ { x: 'A', y: 23 }, { x: 'B', y: 8 } ] },
@@ -12,11 +13,11 @@ class ListDetails extends Component {
     const { data } = this.props;
     return (
       <div className="ListDetails">
-        <ul>
+        <StripedList>
           {[...data].map(id => (
-            <li key={id}>{id}</li>
+            <ListItem key={id}><i className="fas fa-ice-cream"/>{id}</ListItem>
           ))}
-        </ul>
+        </StripedList>
 
         <LineChart data={chartdata} />
       </div>
